@@ -58,6 +58,29 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  
+function playingDrum(event) {
+  //grab the key (div) pressed and sync with audio
+  const key = document.querySelector(`div[data-key="${event.keyCode}"]`);
+  const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+  console.log(event.keyCode); //return keyCode to check
+  if (!key) return;
+  //when press, play audio
+  audio.play();
+  //set currentTime to 0 so it rewind after play.
+  audio.currentTime = 0;
+  key.classList.add('playing'); //go to css sheet to see
+}
+
+function removeTransition(event) {
+    if(event.propertyName !== 'transform') return;
+    this.classList.remove('playing');
+  }
+
+  window.addEventListener('keydown', playingDrum);
+  //remove class after end 
+  const keys = document.querySelectorAll(`.key`);
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition))
 
 </script>
 
